@@ -1,5 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
+import Count from './Count';
 
 class ClassInput extends Component {
   constructor(props) {
@@ -42,6 +43,7 @@ class ClassInput extends Component {
       <section>
         {/* eslint-disable-next-line react/prop-types */}
         <h3>{this.props.name}</h3>
+        <Count todos={this.state.todos} />
         {/* The input field to enter To-Do's */}
         <form onSubmit={this.handleSubmit}>
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
