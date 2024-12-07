@@ -50,11 +50,17 @@ ul {
   margin: 0 0 0.5rem 0;
   padding-bottom: 0.25rem;
   border-bottom: #111 1px solid;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 li {
   width: 100%;
   font-family: 'Merriweather', serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 button {
@@ -64,4 +70,10 @@ button {
   border: none;
   border-radius: 0.25rem;
   font-family: 'Merriweather', serif;
+}
+
+.todoDelete {
+  border: none;
+  width: fit-content;
+  padding: 0.2rem;
 }
