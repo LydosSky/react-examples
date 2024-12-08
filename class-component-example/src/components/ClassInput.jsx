@@ -9,11 +9,23 @@ class ClassInput extends Component {
     this.state = {
       todos: ['Just some demo tasks', 'As an example'],
       inputVal: '',
+      edit: false,
+      editTodo: '',
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+  }
+
+  handleEdit(todo) {
+    this.setState((state) => ({
+      ...state,
+      edit: true,
+      editTodo: todo,
+      inputVal: todo,
+    }));
   }
 
   handleDelete(todo) {
@@ -33,8 +45,12 @@ class ClassInput extends Component {
   handleSubmit(e) {
     e.preventDefault();
     this.setState((state) => ({
-      todos: state.todos.concat(state.inputVal),
+      todos: state.edit
+        ? state.todos.filter((t) => t !== state.editTodo).concat(state.inputVal)
+        : state.todos.concat(state.inputVal),
       inputVal: '',
+      edit: false,
+      editTodo: '',
     }));
   }
 
@@ -49,9 +65,10 @@ class ClassInput extends Component {
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label htmlFor="task-entry">Enter a task: </label>
           <input
+            disabled={this.state.edit}
             type="text"
             name="task-entry"
-            value={this.state.inputVal}
+            value={this.state.edit ? '' : this.state.inputVal}
             onChange={this.handleInputChange}
           />
           <button type="submit">Submit</button>
@@ -61,13 +78,39 @@ class ClassInput extends Component {
         <ul>
           {this.state.todos.map((todo) => (
             <li key={todo}>
-              {todo}{' '}
-              <button
-                className="todoDelete"
-                onClick={() => this.handleDelete(todo)}
-              >
-                del
-              </button>
+              {this.state.edit && this.state.editTodo === todo ? (
+                <form className="editForm" onSubmit={this.handleSubmit}>
+                  <input
+                    name="task-entry"
+                    type="text"
+                    value={this.state.inputVal}
+                    onChange={this.handleInputChange}
+                  />
+                  <button className="editBtn" type="submit">
+                    ReSubmit
+                  </button>
+                </form>
+              ) : (
+                <>
+                  {todo}
+                  <div className="buttons">
+                    <button
+                      type="button"
+                      className="todoDelete"
+                      onClick={() => this.handleEdit(todo)}
+                    >
+                      edit
+                    </button>
+                    <button
+                      type="button"
+                      className="todoDelete"
+                      onClick={() => this.handleDelete(todo)}
+                    >
+                      del
+                    </button>
+                  </div>
+                </>
+              )}
             </li>
           ))}
         </ul>

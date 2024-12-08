@@ -72,8 +72,15 @@ button {
   font-family: 'Merriweather', serif;
 }
 
+.editBtn,
 .todoDelete {
   border: none;
   width: fit-content;
   padding: 0.2rem;
+}
+
+.editForm {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
